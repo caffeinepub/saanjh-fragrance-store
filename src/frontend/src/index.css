@@ -1,0 +1,557 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Deep luxury dark theme — obsidian base with antique gold */
+    --background: 13 0.014 285;
+    --foreground: 95 0.015 85;
+
+    --card: 18 0.02 285;
+    --card-foreground: 95 0.015 85;
+
+    --popover: 20 0.018 285;
+    --popover-foreground: 95 0.015 85;
+
+    --primary: 78 0.12 85;
+    --primary-foreground: 15 0.012 285;
+
+    --secondary: 25 0.02 285;
+    --secondary-foreground: 85 0.02 85;
+
+    --muted: 22 0.018 285;
+    --muted-foreground: 65 0.02 85;
+
+    --accent: 75 0.15 75;
+    --accent-foreground: 12 0.01 285;
+
+    --destructive: 55 0.2 25;
+    --destructive-foreground: 98 0.005 85;
+
+    --border: 28 0.022 285;
+    --input: 28 0.022 285;
+    --ring: 78 0.12 85;
+
+    --radius: 0.75rem;
+
+    /* Gold tones */
+    --gold-light: 88 0.15 88;
+    --gold: 78 0.13 82;
+    --gold-dark: 66 0.11 80;
+
+    /* WhatsApp green */
+    --whatsapp: 58 0.18 152;
+    --whatsapp-dark: 50 0.16 152;
+
+    --chart-1: 78 0.12 85;
+    --chart-2: 65 0.14 152;
+    --chart-3: 72 0.1 60;
+    --chart-4: 80 0.08 30;
+    --chart-5: 70 0.12 200;
+
+    --sidebar: 20 0.018 285;
+    --sidebar-foreground: 95 0.015 85;
+    --sidebar-primary: 78 0.12 85;
+    --sidebar-primary-foreground: 15 0.012 285;
+    --sidebar-accent: 25 0.02 285;
+    --sidebar-accent-foreground: 85 0.02 85;
+    --sidebar-border: 30 0.025 285;
+    --sidebar-ring: 78 0.12 85;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "DM Sans", sans-serif;
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    /* Subtle noise texture for depth */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Playfair Display", serif;
+  }
+}
+
+@layer components {
+  /* ── Typography ── */
+  .gold-text {
+    color: oklch(var(--gold));
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(
+      135deg,
+      oklch(92% 0.12 90) 0%,
+      oklch(82% 0.15 84) 30%,
+      oklch(96% 0.09 92) 55%,
+      oklch(74% 0.13 80) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold shimmer heading sweep */
+  .shimmer-heading {
+    background: linear-gradient(
+      110deg,
+      oklch(92% 0.12 90) 0%,
+      oklch(82% 0.15 84) 25%,
+      oklch(96% 0.09 92) 40%,
+      oklch(74% 0.13 80) 55%,
+      oklch(82% 0.15 84) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer-sweep 4s linear infinite;
+  }
+
+  @keyframes shimmer-sweep {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  /* ── Section divider ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: "";
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(78% 0.13 82 / 0.5),
+      transparent
+    );
+  }
+
+  /* ── WhatsApp button ── */
+  .whatsapp-btn {
+    background: linear-gradient(135deg, #25d366 0%, #1ebe5d 100%);
+    color: white;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .whatsapp-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .whatsapp-btn:hover::before {
+    opacity: 1;
+  }
+
+  .whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.45), 0 0 0 1px
+      rgba(37, 211, 102, 0.2);
+  }
+
+  /* ── Product card — glassmorphism + glow ── */
+  .product-card {
+    background: linear-gradient(
+      160deg,
+      oklch(22% 0.024 80 / 0.95) 0%,
+      oklch(19% 0.02 285 / 0.98) 100%
+    );
+    border: 1px solid oklch(78% 0.13 82 / 0.12);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0
+      oklch(86% 0.14 88 / 0.06);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow
+      0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    will-change: transform;
+  }
+
+  .product-card:hover {
+    transform: translateY(-14px);
+    border-color: oklch(78% 0.13 82 / 0.45);
+    box-shadow: 0 32px 72px rgba(0, 0, 0, 0.7), 0 0 0 1px
+      oklch(78% 0.13 82 / 0.3), 0 0 60px oklch(78% 0.13 82 / 0.12), inset 0 1px
+      0 oklch(86% 0.14 88 / 0.12);
+  }
+
+  /* Pulse glow border animation */
+  .product-card-glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 0deg,
+      oklch(86% 0.14 88 / 0) 0%,
+      oklch(86% 0.14 88 / 0.5) 25%,
+      oklch(86% 0.14 88 / 0) 50%,
+      oklch(86% 0.14 88 / 0.3) 75%,
+      oklch(86% 0.14 88 / 0) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1px;
+    pointer-events: none;
+    animation: conic-spin 4s linear infinite;
+  }
+
+  .product-card:hover .product-card-glow {
+    opacity: 1;
+  }
+
+  @keyframes conic-spin {
+    from {
+      --gradient-angle: 0deg;
+    }
+    to {
+      --gradient-angle: 360deg;
+    }
+  }
+
+  /* Card body */
+  .product-card-body {
+    background: linear-gradient(
+      180deg,
+      oklch(23% 0.028 80 / 0.4) 0%,
+      oklch(18% 0.02 285 / 0.6) 100%
+    );
+    border-top: 1px solid oklch(78% 0.13 82 / 0.08);
+  }
+
+  /* Floating image animation */
+  .float-image {
+    animation: float-gentle 5s ease-in-out infinite;
+  }
+
+  @keyframes float-gentle {
+    0%,
+    100% {
+      transform: translateY(0px) scale(1.0);
+    }
+    50% {
+      transform: translateY(-8px) scale(1.02);
+    }
+  }
+
+  /* ── Scroll reveals ── */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform
+      0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+  }
+
+  /* ── Trust badges marquee ── */
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ── Hero particles ── */
+  .hero-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      oklch(92% 0.15 88) 0%,
+      oklch(86% 0.14 88 / 0.6) 50%,
+      transparent 80%
+    );
+    animation: float-particle linear infinite;
+    pointer-events: none;
+    filter: blur(0.5px);
+  }
+
+  @keyframes float-particle {
+    0% {
+      transform: translateY(100vh) translateX(0) scale(0);
+      opacity: 0;
+    }
+    8% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-15vh) translateX(30px) scale(1.2);
+      opacity: 0;
+    }
+  }
+
+  /* ── Shimmer border (cards & photo) ── */
+  .shimmer-border {
+    position: relative;
+  }
+
+  .shimmer-border::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+      135deg,
+      oklch(92% 0.15 90 / 0.7),
+      oklch(78% 0.13 82 / 0.2) 40%,
+      transparent 60%,
+      oklch(86% 0.14 88 / 0.4)
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: shimmer-border-rotate 6s linear infinite;
+  }
+
+  @keyframes shimmer-border-rotate {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 300% 0%;
+    }
+  }
+
+  /* ── Founder photo golden frame corners ── */
+  .founder-frame {
+    position: relative;
+  }
+
+  .founder-frame::before,
+  .founder-frame::after {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: oklch(86% 0.14 88 / 0.8);
+    border-style: solid;
+    z-index: 10;
+  }
+
+  .founder-frame::before {
+    top: -6px;
+    left: -6px;
+    border-width: 2px 0 0 2px;
+    border-radius: 2px 0 0 0;
+  }
+
+  .founder-frame::after {
+    bottom: -6px;
+    right: -6px;
+    border-width: 0 2px 2px 0;
+    border-radius: 0 0 2px 0;
+  }
+
+  /* ── Nav links ── */
+  .nav-link {
+    position: relative;
+    transition: color 0.25s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: oklch(var(--gold));
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* ── Review card decorative quote ── */
+  .review-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .review-card::before {
+    content: "\201C";
+    position: absolute;
+    top: -14px;
+    right: 12px;
+    font-family: "Playfair Display", serif;
+    font-size: 110px;
+    line-height: 1;
+    font-weight: 800;
+    background: linear-gradient(
+      135deg,
+      oklch(86% 0.14 88 / 0.22),
+      oklch(78% 0.13 82 / 0.06)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Hero decorative ring ── */
+  .hero-ring {
+    border-radius: 50%;
+    border: 1px solid oklch(78% 0.13 82 / 0.12);
+    pointer-events: none;
+    animation: ring-pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes ring-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: translateY(-50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.03);
+    }
+  }
+
+  /* ── Hero bottom vignette ── */
+  .hero-vignette {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      oklch(13% 0.014 285 / 0.6) 50%,
+      oklch(13% 0.014 285) 100%
+    );
+    pointer-events: none;
+  }
+
+  .star-gold {
+    color: #f5c518;
+  }
+
+  /* ── Hero text animations ── */
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(6px);
+    }
+  }
+
+  /* ── Counter animation ── */
+  .counter-animate {
+    transition: all 0.6s ease;
+  }
+
+  /* ── Promise card hover ── */
+  .promise-card {
+    background: oklch(18% 0.02 285);
+    border: 1px solid oklch(78% 0.13 82 / 0.1);
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .promise-card:hover {
+    border-color: oklch(78% 0.13 82 / 0.35);
+    background: oklch(20% 0.024 80 / 0.5);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px
+      oklch(78% 0.13 82 / 0.06);
+  }
+
+  /* ── Parallax container ── */
+  .parallax-bg {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}
